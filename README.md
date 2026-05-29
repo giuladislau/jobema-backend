@@ -10,3 +10,5 @@ Sistema de gestão de distribuição de água.
 ## Setup
 npm install
 npm run dev
+
+## Fluxo de Desenvolvimento
