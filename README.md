@@ -1,14 +1,23 @@
 # Jobema Backend
 
-Sistema de gestão de distribuição de água.
+Backend do sistema de gerenciamento de distribuição de água Jobema.
 
 ## Tecnologias
+
 - Node.js
-- Express
+- Express.js
 - PostgreSQL
 
-## Setup
-npm install
-npm run dev
+## Instalação
 
-## Fluxo de Desenvolvimento
+```bash
+npm install
+```
+
+## Fluxo Git
+- main
+- develop
+- feature/*
+
+## Padrão do Projeto
+O backend utiliza ES Modules ("type": "module").
