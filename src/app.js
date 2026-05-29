@@ -1,9 +1,18 @@
-import express from 'express';
-import routes from './routes/index.js';
+// configuracao express
+
+import express from "express";
 
 const app = express();
 
+// middleware json
 app.use(express.json());
-app.use(routes);
+
+// rota health check
+app.get("/health", (request, response) => {
+  return response.status(200).json({
+    status: "ok",
+    message: "api funcionando",
+  });
+});
 
 export default app;
