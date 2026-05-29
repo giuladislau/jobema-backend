@@ -1,11 +1,12 @@
-// regras negocio cliente
+import clienteRepository from "../repositories/clienteRepository.js";
 
-import { findAllClients } from "../repositories/clienteRepository.js";
-
-async function getAllClients() {
-  const clients = await findAllClients();
+// lista clientes
+async function listClients() {
+  const clients = await clienteRepository.findAll();
 
   return clients;
 }
 
-export { getAllClients };
+export default {
+  listClients,
+};

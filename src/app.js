@@ -11,13 +11,6 @@ const app = express();
 // middleware json
 app.use(express.json());
 
-// health check
-app.get("/health", (request, response) => {
-  return response.status(200).json({
-    status: "ok",
-  });
-});
-
 // rotas api
 app.use(routes);
 

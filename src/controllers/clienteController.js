@@ -1,21 +1,19 @@
-// controller cliente
+import clienteService from "../services/clienteService.js";
 
-import { getAllClients } from "../services/clienteService.js";
-
-import { successResponse } from "../utils/apiResponse.js";
-
-async function getClients(request, response, next) {
+// lista clientes
+async function index(request, response, next) {
   try {
-    const clients = await getAllClients();
+    const clients = await clienteService.listClients();
 
-    return successResponse(
-      response,
-      clients,
-      "clientes listados",
-    );
+    return response.status(200).json({
+      success: true,
+      data: clients,
+    });
   } catch (error) {
     next(error);
   }
 }
 
-export { getClients };
+export default {
+  index,
+};

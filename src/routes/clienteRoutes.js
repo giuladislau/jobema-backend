@@ -1,11 +1,10 @@
-// rotas cliente
-
 import { Router } from "express";
 
-import { getClients } from "../controllers/clienteController.js";
+import clienteController from "../controllers/clienteController.js";
 
 const router = Router();
 
-router.get("/", getClients);
+// lista clientes
+router.get("/", clienteController.index);
 
 export default router;

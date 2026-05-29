@@ -1,12 +1,17 @@
-// queries cliente
-
+// conexao banco
 import pool from "../database/connection.js";
 
-async function findAllClients() {
+// busca todos os clientes
+async function findAll() {
   const query = `
-    SELECT *
+    SELECT
+      id_cliente,
+      nome,
+      telefone,
+      endereco,
+      criado_em
     FROM cliente
-    ORDER BY id_cliente ASC
+    ORDER BY id_cliente;
   `;
 
   const { rows } = await pool.query(query);
@@ -14,4 +19,6 @@ async function findAllClients() {
   return rows;
 }
 
-export { findAllClients };
+export default {
+  findAll,
+};
