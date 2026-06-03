@@ -31,8 +31,29 @@ async function createClient(data) {
   return client;
 }
 
+// atualiza cliente
+async function updateClient(id, data) {
+  const client = await clienteRepository.findById(id);
+
+  if (!client) {
+    throw new AppError("cliente não encontrado", 404);
+  }
+
+  if (!data.nome?.trim()) {
+    throw new AppError("nome é obrigatório", 400);
+  }
+
+  const updatedClient = await clienteRepository.update(
+    id,
+    data,
+  );
+
+  return updatedClient;
+}
+
 export default {
   listClients,
   getClientById,
   createClient,
+  updateClient,
 };

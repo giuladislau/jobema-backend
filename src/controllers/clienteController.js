@@ -44,8 +44,29 @@ async function store(request, response, next) {
   }
 }
 
+// atualiza cliente
+async function update(request, response, next) {
+  try {
+    const { id } = request.params;
+
+    const client =
+      await clienteService.updateClient(
+        id,
+        request.body,
+      );
+
+    return response.status(200).json({
+      success: true,
+      data: client,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export default {
   index,
   show,
   store,
+  update,
 };

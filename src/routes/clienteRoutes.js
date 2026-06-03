@@ -13,4 +13,7 @@ router.get("/:id", clienteController.show);
 // cadastra cliente
 router.post("/", clienteController.store);
 
+// atualiza cliente
+router.put("/:id", clienteController.update);
+
 export default router;
