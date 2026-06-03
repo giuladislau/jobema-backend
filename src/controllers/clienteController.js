@@ -29,6 +29,7 @@ async function show(request, response, next) {
     next(error);
   }
 }
+
 // cria cliente
 async function store(request, response, next) {
   try {
@@ -42,6 +43,7 @@ async function store(request, response, next) {
     next(error);
   }
 }
+
 export default {
   index,
   show,

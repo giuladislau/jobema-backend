@@ -19,6 +19,7 @@ async function getClientById(id) {
 
   return client;
 }
+
 // cria cliente
 async function createClient(data) {
   if (!data.nome?.trim()) {
@@ -29,6 +30,7 @@ async function createClient(data) {
 
   return client;
 }
+
 export default {
   listClients,
   getClientById,

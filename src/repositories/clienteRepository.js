@@ -36,6 +36,7 @@ async function findById(id) {
 
   return rows[0];
 }
+
 // cria cliente
 async function create(cliente) {
   const { nome, telefone, endereco } = cliente;
@@ -63,6 +64,7 @@ async function create(cliente) {
 
   return rows[0];
 }
+
 export default {
   findAll,
   findById,
