@@ -51,9 +51,21 @@ async function updateClient(id, data) {
   return updatedClient;
 }
 
+// remove cliente
+async function deleteClient(id) {
+  const client = await clienteRepository.findById(id);
+
+  if (!client) {
+    throw new AppError("cliente não encontrado", 404);
+  }
+
+  await clienteRepository.remove(id);
+}
+
 export default {
   listClients,
   getClientById,
   createClient,
   updateClient,
+  deleteClient,
 };

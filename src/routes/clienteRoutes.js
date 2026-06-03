@@ -16,4 +16,7 @@ router.post("/", clienteController.store);
 // atualiza cliente
 router.put("/:id", clienteController.update);
 
+// remove cliente
+router.delete("/:id", clienteController.destroy);
+
 export default router;

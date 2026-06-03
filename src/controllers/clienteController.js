@@ -64,9 +64,26 @@ async function update(request, response, next) {
   }
 }
 
+// remove cliente
+async function destroy(request, response, next) {
+  try {
+    const { id } = request.params;
+
+    await clienteService.deleteClient(id);
+
+    return response.status(200).json({
+      success: true,
+      data: {},
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export default {
   index,
   show,
   store,
   update,
+  destroy,
 };

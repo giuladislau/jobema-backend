@@ -94,9 +94,23 @@ async function update(id, cliente) {
   return rows[0];
 }
 
+// remove cliente
+async function remove(id) {
+  const query = `
+    DELETE FROM cliente
+    WHERE id_cliente = $1
+    RETURNING id_cliente;
+  `;
+
+  const { rows } = await pool.query(query, [id]);
+
+  return rows[0];
+}
+
 export default {
   findAll,
   findById,
   create,
   update,
+  remove,
 };
