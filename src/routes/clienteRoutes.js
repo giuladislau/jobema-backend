@@ -7,4 +7,7 @@ const router = Router();
 // lista clientes
 router.get("/", clienteController.index);
 
+// busca cliente por id
+router.get("/:id", clienteController.show);
+
 export default router;
