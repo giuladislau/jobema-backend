@@ -14,6 +14,23 @@ async function index(request, response, next) {
   }
 }
 
+// busca cliente por id
+async function show(request, response, next) {
+  try {
+    const { id } = request.params;
+
+    const client = await clienteService.getClientById(id);
+
+    return response.status(200).json({
+      success: true,
+      data: client,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export default {
   index,
+  show,
 };
