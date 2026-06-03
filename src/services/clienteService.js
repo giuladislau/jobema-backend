@@ -19,8 +19,18 @@ async function getClientById(id) {
 
   return client;
 }
+// cria cliente
+async function createClient(data) {
+  if (!data.nome?.trim()) {
+    throw new AppError("nome é obrigatório", 400);
+  }
 
+  const client = await clienteRepository.create(data);
+
+  return client;
+}
 export default {
   listClients,
   getClientById,
+  createClient,
 };

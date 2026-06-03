@@ -29,8 +29,21 @@ async function show(request, response, next) {
     next(error);
   }
 }
+// cria cliente
+async function store(request, response, next) {
+  try {
+    const client = await clienteService.createClient(request.body);
 
+    return response.status(201).json({
+      success: true,
+      data: client,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 export default {
   index,
   show,
+  store,
 };

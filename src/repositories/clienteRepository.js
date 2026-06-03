@@ -36,8 +36,35 @@ async function findById(id) {
 
   return rows[0];
 }
+// cria cliente
+async function create(cliente) {
+  const { nome, telefone, endereco } = cliente;
 
+  const query = `
+    INSERT INTO cliente (
+      nome,
+      telefone,
+      endereco
+    )
+    VALUES ($1, $2, $3)
+    RETURNING
+      id_cliente,
+      nome,
+      telefone,
+      endereco,
+      criado_em;
+  `;
+
+  const { rows } = await pool.query(query, [
+    nome,
+    telefone,
+    endereco,
+  ]);
+
+  return rows[0];
+}
 export default {
   findAll,
   findById,
+  create,
 };
