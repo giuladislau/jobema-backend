@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import clienteRoutes from "./clienteRoutes.js";
+import caminhaoRoutes from "./caminhaoRoutes.js";
 
 const router = Router();
 
@@ -14,5 +15,8 @@ router.get("/health", (request, response) => {
 
 // rotas clientes
 router.use("/clientes", clienteRoutes);
+
+// rotas caminhões
+router.use("/caminhoes", caminhaoRoutes);
 
 export default router;
