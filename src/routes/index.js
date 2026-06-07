@@ -4,6 +4,7 @@ import clienteRoutes from "./clienteRoutes.js";
 import caminhaoRoutes from "./caminhaoRoutes.js";
 import operacaoRoutes from "./operacaoRoutes.js";
 import authRoutes from "./authRoutes.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 const router = Router();
 
@@ -15,16 +16,12 @@ router.get("/health", (request, response) => {
   });
 });
 
-// rotas clientes
-router.use("/clientes", clienteRoutes);
-
-// rotas caminhões
-router.use("/caminhoes", caminhaoRoutes);
-
-// rotas operações
-router.use("/operacoes", operacaoRoutes);
-
 // rotas autenticação
 router.use("/auth", authRoutes);
+
+// rotas protegidas
+router.use("/clientes", authMiddleware, clienteRoutes);
+router.use("/caminhoes", authMiddleware, caminhaoRoutes);
+router.use("/operacoes", authMiddleware, operacaoRoutes);
 
 export default router;
