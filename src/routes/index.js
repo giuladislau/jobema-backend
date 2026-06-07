@@ -3,6 +3,7 @@ import { Router } from "express";
 import clienteRoutes from "./clienteRoutes.js";
 import caminhaoRoutes from "./caminhaoRoutes.js";
 import operacaoRoutes from "./operacaoRoutes.js";
+import authRoutes from "./authRoutes.js";
 
 const router = Router();
 
@@ -22,5 +23,8 @@ router.use("/caminhoes", caminhaoRoutes);
 
 // rotas operações
 router.use("/operacoes", operacaoRoutes);
+
+// rotas autenticação
+router.use("/auth", authRoutes);
 
 export default router;
