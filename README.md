@@ -1,35 +1,31 @@
 # Jobema Backend
 
-Backend do sistema de gerenciamento de distribuição de água da empresa Jobema.
+API REST para gerenciamento de clientes, caminhões, operações, vales e fechamentos mensais.
 
-## Objetivo
+O sistema foi desenvolvido para apoiar o controle operacional de empresas de transporte e logística, centralizando informações que normalmente seriam mantidas em planilhas ou registros manuais.
 
-O sistema tem como objetivo registrar e controlar:
+## Funcionalidades
 
-- Clientes
-- Caminhões
-- Operações de entrega e retirada
-- Emissão de vales
-- Fechamentos mensais
-
-Substituindo controles manuais por uma aplicação web com rastreabilidade das operações.
-
----
+* Cadastro e gerenciamento de clientes
+* Cadastro e gerenciamento de caminhões
+* Registro de operações de entrega e retirada
+* Controle de vales vinculados às operações
+* Consolidação de fechamentos mensais
+* Autenticação baseada em JWT
 
 ## Tecnologias
 
-- Node.js
-- Express
-- PostgreSQL
-- ESLint
-- Prettier
-- Nodemon
-
----
+* Node.js
+* Express
+* PostgreSQL
+* JSON Web Token (JWT)
+* bcrypt
+* ESLint
+* Nodemon
 
 ## Arquitetura
 
-O projeto segue uma arquitetura em camadas:
+O projeto utiliza arquitetura em camadas para separar responsabilidades e facilitar manutenção e evolução.
 
 ```text
 src
@@ -45,139 +41,65 @@ src
 └── docs
 ```
 
-### Responsabilidades
+| Camada       | Responsabilidade                 |
+| ------------ | -------------------------------- |
+| Controllers  | Recebimento das requisições HTTP |
+| Services     | Regras de negócio                |
+| Repositories | Persistência de dados            |
+| Routes       | Definição das rotas              |
+| Middlewares  | Processamento intermediário      |
+| Database     | Conexão com banco de dados       |
+| Utils        | Utilitários compartilhados       |
 
-| Camada | Responsabilidade |
-|----------|----------|
-| Controllers | Receber requisições HTTP |
-| Services | Regras de negócio |
-| Repositories | Acesso ao banco de dados |
-| Routes | Definição dos endpoints |
-| Middlewares | Tratamento de erros e validações |
-| Database | Conexão e scripts do banco |
+## Regras de Negócio
 
----
-
-## Estrutura do Banco
-
-Principais entidades:
-
-- Usuário
-- Cliente
-- Caminhão
-- Operação
-- Vale
-- Fechamento Mensal
-
-Banco de dados:
-
-```text
-PostgreSQL
-```
-
----
+* Operações devem estar vinculadas a cliente, caminhão e usuário.
+* Cada vale está associado a uma única operação.
+* Um vale não pode ser reutilizado.
+* Fechamentos mensais consolidam automaticamente as operações registradas.
+* Rotas de negócio exigem autenticação JWT.
 
 ## Instalação
 
-### Clonar projeto
+Clonar o repositório:
 
 ```bash
 git clone <url-do-repositorio>
 ```
 
-### Instalar dependências
+Instalar dependências:
 
 ```bash
 npm install
 ```
 
-### Configurar ambiente
+Criar um arquivo `.env` utilizando o modelo disponível em `.env.example`.
 
-Criar arquivo:
+## Execução
 
-```env
-.env
-```
-
-Exemplo:
-
-```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=jobema
-DB_USER=postgres
-DB_PASSWORD=sua_senha
-PORT=3000
-```
-
----
-
-## Executar projeto
-
-Modo desenvolvimento:
+Ambiente de desenvolvimento:
 
 ```bash
 npm run dev
 ```
 
-Modo produção:
+Execução padrão:
 
 ```bash
 npm start
 ```
 
----
+## Segurança
 
-## Health Check
+* Senhas armazenadas com bcrypt.
+* Autenticação baseada em JWT.
+* Variáveis sensíveis mantidas fora do repositório através do arquivo `.env`.
+* Rotas protegidas por middleware de autenticação.
 
-Endpoint para verificar disponibilidade da API:
+## Melhorias Futuras
 
-```http
-GET /health
-```
-
-Resposta:
-
-```json
-{
-  "status": "ok",
-  "message": "api funcionando"
-}
-```
-
----
-
-## Padrão de Resposta
-
-### Sucesso
-
-```json
-{
-  "success": true,
-  "data": {}
-}
-```
-
-### Listagem
-
-```json
-{
-  "success": true,
-  "data": []
-}
-```
-
-### Erro
-
-```json
-{
-  "success": false,
-  "message": "cliente não encontrado"
-}
-```
-
----
-
-## Fluxo de Desenvolvimento
-
-Estratégia baseada em Git Flow simplificado.
+* Controle de permissões por perfil de usuário.
+* Dashboard gerencial.
+* Exportação de relatórios.
+* Testes automatizados.
+* Interface web para operação do sistema.
