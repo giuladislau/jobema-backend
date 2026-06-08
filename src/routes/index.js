@@ -7,6 +7,7 @@ import authRoutes from "./authRoutes.js";
 import usuarioRoutes from "./usuarioRoutes.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import valeRoutes from "./valeRoutes.js";
+import fechamentoRoutes from "./fechamentoRoutes.js";
 
 const router = Router();
 
@@ -27,5 +28,6 @@ router.use("/caminhoes", authMiddleware, caminhaoRoutes);
 router.use("/operacoes", authMiddleware, operacaoRoutes);
 router.use("/usuarios", authMiddleware, usuarioRoutes);
 router.use("/vales", authMiddleware, valeRoutes);
+router.use("/fechamentos", authMiddleware, fechamentoRoutes);
 
 export default router;
