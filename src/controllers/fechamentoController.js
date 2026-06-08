@@ -32,8 +32,10 @@ async function show(request, response, next) {
 
 async function generate(request, response, next) {
     try {
+        const { id_usuario } = request.user;
+
         const result =
-            await fechamentoService.generateClosing();
+            await fechamentoService.generateClosing(id_usuario);
 
         return response.status(200).json({
             success: true,
