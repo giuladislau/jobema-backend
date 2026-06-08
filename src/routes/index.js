@@ -6,6 +6,7 @@ import operacaoRoutes from "./operacaoRoutes.js";
 import authRoutes from "./authRoutes.js";
 import usuarioRoutes from "./usuarioRoutes.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
+import valeRoutes from "./valeRoutes.js";
 
 const router = Router();
 
@@ -25,5 +26,6 @@ router.use("/clientes", authMiddleware, clienteRoutes);
 router.use("/caminhoes", authMiddleware, caminhaoRoutes);
 router.use("/operacoes", authMiddleware, operacaoRoutes);
 router.use("/usuarios", authMiddleware, usuarioRoutes);
+router.use("/vales", authMiddleware, valeRoutes);
 
 export default router;
