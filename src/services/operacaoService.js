@@ -47,6 +47,14 @@ async function createOperation(data) {
         );
     }
 
+    if (quantidade <= 0) {
+        throw new AppError("quantidade deve ser maior que zero", 400);
+    }
+
+    if (valor <= 0) {
+        throw new AppError("valor deve ser maior que zero", 400);
+    }
+
     return operacaoRepository.create(data);
 }
 
@@ -77,6 +85,14 @@ async function updateOperation(id, data) {
             "tipo deve ser ENTREGA ou RETIRADA",
             400,
         );
+    }
+
+    if (data.quantidade <= 0) {
+        throw new AppError("quantidade deve ser maior que zero", 400);
+    }
+
+    if (data.valor <= 0) {
+        throw new AppError("valor deve ser maior que zero", 400);
     }
 
     return operacaoRepository.update(id, data);

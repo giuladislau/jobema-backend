@@ -34,6 +34,10 @@ async function createTruck(data) {
         throw new AppError("capacidade é obrigatória", 400);
     }
 
+    if (data.capacidade_litros <= 0) {
+        throw new AppError("capacidade deve ser maior que zero", 400);
+    }
+
     const truck = await caminhaoRepository.create(data);
 
     return truck;
@@ -53,6 +57,10 @@ async function updateTruck(id, data) {
 
     if (!data.capacidade_litros) {
         throw new AppError("capacidade é obrigatória", 400);
+    }
+
+    if (data.capacidade_litros <= 0) {
+        throw new AppError("capacidade deve ser maior que zero", 400);
     }
 
     const truck = await caminhaoRepository.update(id, data);

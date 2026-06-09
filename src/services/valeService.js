@@ -30,6 +30,10 @@ async function createVoucher(data) {
         );
     }
 
+    if (valor <= 0) {
+        throw new AppError("valor deve ser maior que zero", 400);
+    }
+
     const operacao =
         await operacaoRepository.findById(
             id_operacao,
@@ -69,6 +73,10 @@ async function updateVoucher(id, data) {
             "valor é obrigatório",
             400,
         );
+    }
+
+    if (data.valor <= 0) {
+        throw new AppError("valor deve ser maior que zero", 400);
     }
 
     return valeRepository.update(id, data);

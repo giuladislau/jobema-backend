@@ -57,6 +57,13 @@ async function createUser(data) {
         );
     }
 
+    if (!["ADMIN", "OPERADOR"].includes(perfil)) {
+        throw new AppError(
+            "perfil deve ser ADMIN ou OPERADOR",
+            400,
+        );
+    }
+
     const loginExists =
         await usuarioRepository.findByLogin(login);
 
@@ -117,6 +124,13 @@ async function updateUser(id, data) {
     if (!perfil?.trim()) {
         throw new AppError(
             "perfil é obrigatório",
+            400,
+        );
+    }
+
+    if (!["ADMIN", "OPERADOR"].includes(perfil)) {
+        throw new AppError(
+            "perfil deve ser ADMIN ou OPERADOR",
             400,
         );
     }

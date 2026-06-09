@@ -26,6 +26,14 @@ async function createClient(data) {
     throw new AppError("nome é obrigatório", 400);
   }
 
+  if (!data.telefone?.trim()) {
+    throw new AppError("telefone é obrigatório", 400);
+  }
+
+  if (!data.endereco?.trim()) {
+    throw new AppError("endereço é obrigatório", 400);
+  }
+
   const client = await clienteRepository.create(data);
 
   return client;
@@ -41,6 +49,14 @@ async function updateClient(id, data) {
 
   if (!data.nome?.trim()) {
     throw new AppError("nome é obrigatório", 400);
+  }
+
+  if (!data.telefone?.trim()) {
+    throw new AppError("telefone é obrigatório", 400);
+  }
+
+  if (!data.endereco?.trim()) {
+    throw new AppError("endereço é obrigatório", 400);
   }
 
   const updatedClient = await clienteRepository.update(
