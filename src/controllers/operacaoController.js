@@ -85,10 +85,37 @@ async function destroy(request, response, next) {
     }
 }
 
+// histórico de operações com filtros
+async function history(request, response, next) {
+    try {
+        const { id_cliente, id_usuario, tipo, mes, ano } =
+            request.query;
+
+        const filters = {
+            ...(id_cliente && { id_cliente: Number(id_cliente) }),
+            ...(id_usuario && { id_usuario: Number(id_usuario) }),
+            ...(tipo && { tipo }),
+            ...(mes && { mes: Number(mes) }),
+            ...(ano && { ano: Number(ano) }),
+        };
+
+        const operations =
+            await operacaoService.getHistory(filters);
+
+        return response.status(200).json({
+            success: true,
+            data: operations,
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 export default {
     index,
     show,
     store,
     update,
     destroy,
+    history,
 };

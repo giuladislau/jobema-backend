@@ -7,6 +7,9 @@ const router = Router();
 // lista operações
 router.get("/", operacaoController.index);
 
+// histórico com filtros opcionais
+router.get("/historico", operacaoController.history);
+
 // busca operação por id
 router.get("/:id", operacaoController.show);
 

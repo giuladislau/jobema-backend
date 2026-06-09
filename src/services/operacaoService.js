@@ -93,10 +93,26 @@ async function deleteOperation(id) {
     await operacaoRepository.remove(id);
 }
 
+// histórico de operações com filtros opcionais
+async function getHistory(filters) {
+    const { mes, ano } = filters;
+
+    if (mes !== undefined && (mes < 1 || mes > 12)) {
+        throw new AppError("mês deve ser entre 1 e 12", 400);
+    }
+
+    if (ano !== undefined && ano <= 0) {
+        throw new AppError("ano deve ser um valor positivo", 400);
+    }
+
+    return operacaoRepository.findHistory(filters);
+}
+
 export default {
     listOperations,
     getOperationById,
     createOperation,
     updateOperation,
     deleteOperation,
+    getHistory,
 };
