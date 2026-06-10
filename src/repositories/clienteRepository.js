@@ -7,6 +7,8 @@ async function findAll() {
     SELECT
       id_cliente,
       nome,
+      modalidade,
+      preco_m3,
       telefone,
       endereco,
       criado_em
@@ -25,6 +27,8 @@ async function findById(id) {
     SELECT
       id_cliente,
       nome,
+      modalidade,
+      preco_m3,
       telefone,
       endereco,
       criado_em
@@ -39,18 +43,22 @@ async function findById(id) {
 
 // cria cliente
 async function create(cliente) {
-  const { nome, telefone, endereco } = cliente;
+  const { nome, modalidade, preco_m3, telefone, endereco } = cliente;
 
   const query = `
     INSERT INTO cliente (
       nome,
+      modalidade,
+      preco_m3,
       telefone,
       endereco
     )
-    VALUES ($1, $2, $3)
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING
       id_cliente,
       nome,
+      modalidade,
+      preco_m3,
       telefone,
       endereco,
       criado_em;
@@ -58,6 +66,8 @@ async function create(cliente) {
 
   const { rows } = await pool.query(query, [
     nome,
+    modalidade,
+    preco_m3,
     telefone,
     endereco,
   ]);
@@ -67,18 +77,22 @@ async function create(cliente) {
 
 // atualiza cliente
 async function update(id, cliente) {
-  const { nome, telefone, endereco } = cliente;
+  const { nome, modalidade, preco_m3, telefone, endereco } = cliente;
 
   const query = `
     UPDATE cliente
     SET
       nome = $1,
-      telefone = $2,
-      endereco = $3
-    WHERE id_cliente = $4
+      modalidade = $2,
+      preco_m3 = $3,
+      telefone = $4,
+      endereco = $5
+    WHERE id_cliente = $6
     RETURNING
       id_cliente,
       nome,
+      modalidade,
+      preco_m3,
       telefone,
       endereco,
       criado_em;
@@ -86,6 +100,8 @@ async function update(id, cliente) {
 
   const { rows } = await pool.query(query, [
     nome,
+    modalidade,
+    preco_m3,
     telefone,
     endereco,
     id,

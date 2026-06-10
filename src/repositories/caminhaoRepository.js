@@ -7,6 +7,7 @@ async function findAll() {
       id_caminhao,
       placa,
       motorista,
+      ano,
       capacidade_litros
     FROM caminhao
     ORDER BY id_caminhao;
@@ -24,6 +25,7 @@ async function findById(id) {
       id_caminhao,
       placa,
       motorista,
+      ano,
       capacidade_litros
     FROM caminhao
     WHERE id_caminhao = $1;
@@ -36,52 +38,62 @@ async function findById(id) {
 
 // cria caminhão
 async function create(caminhao) {
-  const { placa, motorista, capacidade_litros } = caminhao;
-
+  const { placa, motorista, ano, capacidade_litros } = caminhao;
   const query = `
-    INSERT INTO caminhao (
-      placa,
-      motorista,
-      capacidade_litros
-    )
-    VALUES ($1, $2, $3)
-    RETURNING
-      id_caminhao,
-      placa,
-      motorista,
-      capacidade_litros;
-  `;
-
+  INSERT INTO caminhao (
+    placa,
+    motorista,
+    ano,
+    capacidade_litros
+  )
+  VALUES ($1, $2, $3, $4)
+  RETURNING
+    id_caminhao,
+    placa,
+    motorista,
+    ano,
+    capacidade_litros;
+`;
   const { rows } = await pool.query(query, [
     placa,
     motorista,
+    ano,
     capacidade_litros,
   ]);
-
   return rows[0];
 }
 
 // atualiza caminhão
 async function update(id, caminhao) {
-  const { placa, motorista, capacidade_litros } = caminhao;
+  const { placa, motorista, ano, capacidade_litros } = caminhao;
+  console.log("update caminhao:", {
+    placa,
+    motorista,
+    ano,
+    capacidade_litros,
+    id,
+  });
 
   const query = `
     UPDATE caminhao
     SET
       placa = $1,
       motorista = $2,
-      capacidade_litros = $3
-    WHERE id_caminhao = $4
+      ano = $3,
+      capacidade_litros = $4
+    WHERE id_caminhao = $5
     RETURNING
       id_caminhao,
       placa,
       motorista,
+      ano,
       capacidade_litros;
   `;
 
   const { rows } = await pool.query(query, [
     placa,
     motorista,
+    ano,
     capacidade_litros,
     id,
   ]);
