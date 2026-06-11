@@ -66,13 +66,6 @@ async function create(caminhao) {
 // atualiza caminhão
 async function update(id, caminhao) {
   const { placa, motorista, ano, capacidade_litros } = caminhao;
-  console.log("update caminhao:", {
-    placa,
-    motorista,
-    ano,
-    capacidade_litros,
-    id,
-  });
 
   const query = `
     UPDATE caminhao
