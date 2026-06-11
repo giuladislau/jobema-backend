@@ -60,7 +60,22 @@ async function upsertFromOperacoes(id_usuario) {
             id_usuario       = EXCLUDED.id_usuario
         RETURNING *;
     `;
+
+  const deleteQuery = `
+        DELETE FROM fechamento_mensal
+        WHERE (id_cliente, mes, ano) NOT IN (
+            SELECT id_cliente,
+                   EXTRACT(MONTH FROM data_operacao)::int,
+                   EXTRACT(YEAR  FROM data_operacao)::int
+            FROM operacao
+            GROUP BY id_cliente,
+                     EXTRACT(MONTH FROM data_operacao)::int,
+                     EXTRACT(YEAR  FROM data_operacao)::int
+        );
+    `;
+
   const { rows } = await pool.query(query, [id_usuario]);
+  await pool.query(deleteQuery);
   return rows;
 }
 
