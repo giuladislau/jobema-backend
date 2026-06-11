@@ -1,105 +1,216 @@
 # Jobema Backend
 
-API REST para gerenciamento de clientes, caminhões, operações, vales e fechamentos mensais.
+## Visão Geral
 
-O sistema foi desenvolvido para apoiar o controle operacional de empresas de transporte e logística, centralizando informações que normalmente seriam mantidas em planilhas ou registros manuais.
+API REST desenvolvida em Node.js e Express para gerenciamento operacional da empresa Jobema.
 
-## Funcionalidades
+O sistema centraliza o controle de:
 
-* Cadastro e gerenciamento de clientes
-* Cadastro e gerenciamento de caminhões
-* Registro de operações de entrega e retirada
-* Controle de vales vinculados às operações
-* Consolidação de fechamentos mensais
-* Autenticação baseada em JWT
+* Clientes
+* Caminhões
+* Operações
+* Vales
+* Usuários
+* Fechamentos mensais
+
+Os dados são persistidos em PostgreSQL e o acesso à API é protegido por autenticação baseada em JWT.
+
+---
 
 ## Tecnologias
 
 * Node.js
-* Express
+* Express.js
 * PostgreSQL
-* JSON Web Token (JWT)
-* bcrypt
-* ESLint
-* Nodemon
+* JWT (JSON Web Token)
+* Bcrypt
+* PDFKit
+* CORS
+
+---
 
 ## Arquitetura
 
-O projeto utiliza arquitetura em camadas para separar responsabilidades e facilitar manutenção e evolução.
+O projeto utiliza arquitetura em camadas:
 
-```text
-src
-├── controllers
-├── services
-├── repositories
-├── routes
-├── middlewares
-├── validations
-├── database
-├── config
-├── utils
-└── docs
-```
+text
+Routes
+  ↓
+Middlewares
+  ↓
+Controllers
+  ↓
+Services
+  ↓
+Repositories
+  ↓
+PostgreSQL
 
-| Camada       | Responsabilidade                 |
-| ------------ | -------------------------------- |
-| Controllers  | Recebimento das requisições HTTP |
-| Services     | Regras de negócio                |
-| Repositories | Persistência de dados            |
-| Routes       | Definição das rotas              |
-| Middlewares  | Processamento intermediário      |
-| Database     | Conexão com banco de dados       |
-| Utils        | Utilitários compartilhados       |
 
-## Regras de Negócio
+### Estrutura de diretórios
 
-* Operações devem estar vinculadas a cliente, caminhão e usuário.
-* Cada vale está associado a uma única operação.
-* Um vale não pode ser reutilizado.
-* Fechamentos mensais consolidam automaticamente as operações registradas.
-* Rotas de negócio exigem autenticação JWT.
+text
+src/
+├── controllers/
+├── database/
+├── middlewares/
+├── repositories/
+├── routes/
+├── services/
+├── utils/
+└── server.js
 
-## Instalação
 
-Clonar o repositório:
+---
 
-```bash
-git clone <url-do-repositorio>
-```
+## Requisitos
 
-Instalar dependências:
+* Node.js 18+
+* PostgreSQL 16+
 
-```bash
+---
+
+## Configuração
+
+### Instalação
+
+bash
 npm install
-```
 
-Criar um arquivo `.env` utilizando o modelo disponível em `.env.example`.
+
+### Variáveis de ambiente
+
+Criar um arquivo .env utilizando o .env.example como referência.
+
+Exemplo:
+
+env
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=jobema
+DB_USER=postgres
+DB_PASSWORD=sua_senha
+
+PORT=3000
+
+JWT_SECRET=seu_secret
+JWT_EXPIRES_IN=8h
+
+
+---
 
 ## Execução
 
-Ambiente de desenvolvimento:
+Modo desenvolvimento:
 
-```bash
+bash
 npm run dev
-```
 
-Execução padrão:
 
-```bash
+Modo produção:
+
+bash
 npm start
-```
 
-## Segurança
 
-* Senhas armazenadas com bcrypt.
-* Autenticação baseada em JWT.
-* Variáveis sensíveis mantidas fora do repositório através do arquivo `.env`.
-* Rotas protegidas por middleware de autenticação.
+Servidor disponível em:
 
-## Melhorias Futuras
+text
+http://localhost:3000
 
-* Controle de permissões por perfil de usuário.
-* Dashboard gerencial.
-* Exportação de relatórios.
-* Testes automatizados.
-* Interface web para operação do sistema.
+
+---
+
+## Autenticação
+
+A API utiliza autenticação baseada em JWT.
+
+Após autenticação, o token deve ser enviado no cabeçalho:
+
+http
+Authorization: Bearer <token>
+
+
+---
+
+## Recursos Disponíveis
+
+### Autenticação
+
+Responsável pelo processo de login e emissão de tokens.
+
+### Usuários
+
+Gerenciamento de usuários e perfis de acesso.
+
+### Clientes
+
+Cadastro e manutenção de clientes.
+
+### Caminhões
+
+Cadastro e manutenção da frota.
+
+### Operações
+
+Registro e acompanhamento das operações realizadas.
+
+### Vales
+
+Controle dos vales vinculados às operações.
+
+### Fechamentos Mensais
+
+Consolidação e exportação de informações operacionais.
+
+---
+
+## Padrão de Resposta
+
+### Sucesso
+
+json
+{
+  "success": true,
+  "data": {}
+}
+
+
+### Erro
+
+json
+{
+  "success": false,
+  "message": "Descrição do erro"
+}
+
+
+---
+
+## Códigos HTTP
+
+| Código | Descrição                      |
+| ------ | ------------------------------ |
+| 200    | Operação realizada com sucesso |
+| 201    | Recurso criado                 |
+| 400    | Dados inválidos                |
+| 401    | Não autenticado                |
+| 403    | Acesso negado                  |
+| 404    | Recurso não encontrado         |
+| 429    | Limite de requisições excedido |
+| 500    | Erro interno                   |
+
+---
+
+## Banco de Dados
+
+O banco de dados é composto pelos seguintes módulos principais:
+
+* Usuários
+* Clientes
+* Caminhões
+* Operações
+* Vales
+* Fechamentos Mensais
+
+A estrutura completa encontra-se no arquivo SQL disponibilizado junto ao projeto.
