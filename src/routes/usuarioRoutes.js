@@ -1,9 +1,10 @@
 import { Router } from "express";
-
 import usuarioController from "../controllers/usuarioController.js";
 import roleCheck from "../middlewares/roleMiddleware.js";
 
 const router = Router();
+
+router.get("/select", usuarioController.listUsersForSelect);
 
 router.get("/", roleCheck("ADMIN"), usuarioController.listUsers);
 router.get("/:id", roleCheck("ADMIN"), usuarioController.getUserById);

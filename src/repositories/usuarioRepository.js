@@ -1,7 +1,7 @@
 import pool from "../database/connection.js";
 
 async function findAll() {
-    const query = `
+  const query = `
         SELECT
             id_usuario,
             nome,
@@ -11,13 +11,13 @@ async function findAll() {
         ORDER BY id_usuario;
     `;
 
-    const { rows } = await pool.query(query);
+  const { rows } = await pool.query(query);
 
-    return rows;
+  return rows;
 }
 
 async function findById(id) {
-    const query = `
+  const query = `
         SELECT
             id_usuario,
             nome,
@@ -27,13 +27,13 @@ async function findById(id) {
         WHERE id_usuario = $1;
     `;
 
-    const { rows } = await pool.query(query, [id]);
+  const { rows } = await pool.query(query, [id]);
 
-    return rows[0];
+  return rows[0];
 }
 
 async function findByLogin(login) {
-    const query = `
+  const query = `
         SELECT
             id_usuario,
             nome,
@@ -44,13 +44,13 @@ async function findByLogin(login) {
         WHERE login = $1;
     `;
 
-    const { rows } = await pool.query(query, [login]);
+  const { rows } = await pool.query(query, [login]);
 
-    return rows[0];
+  return rows[0];
 }
 
 async function findByLoginExceptId(login, id) {
-    const query = `
+  const query = `
         SELECT
             id_usuario
         FROM usuario
@@ -58,16 +58,13 @@ async function findByLoginExceptId(login, id) {
           AND id_usuario <> $2;
     `;
 
-    const { rows } = await pool.query(query, [
-        login,
-        id,
-    ]);
+  const { rows } = await pool.query(query, [login, id]);
 
-    return rows[0];
+  return rows[0];
 }
 
 async function findByIdWithPassword(id) {
-    const query = `
+  const query = `
         SELECT
             id_usuario,
             nome,
@@ -78,20 +75,15 @@ async function findByIdWithPassword(id) {
         WHERE id_usuario = $1;
     `;
 
-    const { rows } = await pool.query(query, [id]);
+  const { rows } = await pool.query(query, [id]);
 
-    return rows[0];
+  return rows[0];
 }
 
 async function create(usuario) {
-    const {
-        nome,
-        login,
-        senha_hash,
-        perfil,
-    } = usuario;
+  const { nome, login, senha_hash, perfil } = usuario;
 
-    const query = `
+  const query = `
         INSERT INTO usuario (
             nome,
             login,
@@ -106,25 +98,15 @@ async function create(usuario) {
             perfil;
     `;
 
-    const { rows } = await pool.query(query, [
-        nome,
-        login,
-        senha_hash,
-        perfil,
-    ]);
+  const { rows } = await pool.query(query, [nome, login, senha_hash, perfil]);
 
-    return rows[0];
+  return rows[0];
 }
 
 async function update(id, usuario) {
-    const {
-        nome,
-        login,
-        senha_hash,
-        perfil,
-    } = usuario;
+  const { nome, login, senha_hash, perfil } = usuario;
 
-    const query = `
+  const query = `
         UPDATE usuario
         SET
             nome = $1,
@@ -139,36 +121,46 @@ async function update(id, usuario) {
             perfil;
     `;
 
-    const { rows } = await pool.query(query, [
-        nome,
-        login,
-        senha_hash,
-        perfil,
-        id,
-    ]);
+  const { rows } = await pool.query(query, [
+    nome,
+    login,
+    senha_hash,
+    perfil,
+    id,
+  ]);
 
-    return rows[0];
+  return rows[0];
 }
 
 async function remove(id) {
-    const query = `
+  const query = `
         DELETE FROM usuario
         WHERE id_usuario = $1
         RETURNING id_usuario;
     `;
 
-    const { rows } = await pool.query(query, [id]);
+  const { rows } = await pool.query(query, [id]);
 
-    return rows[0];
+  return rows[0];
+}
+async function findAllForSelect() {
+  const query = `
+    SELECT id_usuario, nome
+    FROM usuario
+    ORDER BY nome;
+  `;
+  const { rows } = await pool.query(query);
+  return rows;
 }
 
 export default {
-    findAll,
-    findById,
-    findByLogin,
-    findByLoginExceptId,
-    findByIdWithPassword,
-    create,
-    update,
-    remove,
+  findAll,
+  findById,
+  findByLogin,
+  findByLoginExceptId,
+  findByIdWithPassword,
+  findAllForSelect,
+  create,
+  update,
+  remove,
 };

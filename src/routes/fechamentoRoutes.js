@@ -13,10 +13,6 @@ router.get("/export/pdf", fechamentoController.exportPdf);
 
 router.get("/:id", fechamentoController.show);
 
-router.post(
-    "/gerar",
-    roleCheck("ADMIN"),
-    fechamentoController.generate,
-);
+router.post("/gerar", fechamentoController.generate);
 
 export default router;
